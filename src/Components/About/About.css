@@ -1,0 +1,39 @@
+.bg-custom-gray {
+    background-color: #1f2937; 
+    color: #d1d5db; 
+    padding: 20px;
+    margin-bottom: 150px;
+    min-height: 60vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+  }
+  h1 {
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  p {
+    color: #9ca3af; 
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+  button {
+    background-color: #3b82f6;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  button:hover {
+    background-color: #2563eb; 
+  }
