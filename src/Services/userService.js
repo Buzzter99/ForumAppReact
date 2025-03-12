@@ -40,4 +40,24 @@ async function logout() {
     });
 }
 
-export { isAuthenticated, logout };
+async function getCurrentUsers() {
+  return fetch(`${apiBaseUrl}/user/all`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "X-API-KEY": apiKey,
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+}
+
+export { isAuthenticated, logout, getCurrentUsers };
