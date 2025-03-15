@@ -1,16 +1,15 @@
 import './Login.css'
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import { login } from '../../../Services/userService';
 import { useNavigate } from 'react-router';
 
 const Login = () => {
-  const { register, handleSubmit, formState: { errors }, trigger, watch } = useForm();
+  const { register, handleSubmit, formState: { errors, isValid }, trigger, watch } = useForm();
   const [apiErrorMessage, setApiErrorMessage] = useState(null);
-  const emailOrUsernameValue = watch('emailOrUsername');
-  const passwordValue = watch('password');
-  const disabledOnLoad = (emailOrUsernameValue && passwordValue);
+  const emailOrUsername = watch('emailOrUsername');
+  const password = watch('password');
   const navigate = useNavigate();
   const onSubmit = (data) => {
     login(data.emailOrUsername, data.password).then((data) => {
@@ -26,6 +25,14 @@ const Login = () => {
       setApiErrorMessage('An error occurred. Please try again later.');
     });
   };
+  useEffect(() => {
+    if (emailOrUsername) {
+      trigger("emailOrUsername");
+    }
+    if (password) {
+      trigger("password");
+    }
+  }, [emailOrUsername, password, trigger]);
   const handleBlur = async (fieldName) => {
     await trigger(fieldName);
   };
@@ -43,7 +50,7 @@ const Login = () => {
             type="text"
             onBlur={() => handleBlur('emailOrUsername')}
             placeholder="Email/Username*" />
-          {errors.emailOrUsername && !emailOrUsernameValue && (
+          {errors.emailOrUsername && (
             <div className='mt-4'>
               <ErrorMessage errorMessage={errors.emailOrUsername.message} />
             </div>
@@ -57,7 +64,7 @@ const Login = () => {
             onBlur={() => handleBlur('password')}
             placeholder="Password*"
           />
-          {errors.password && !passwordValue && (
+          {errors.password && (
             <div className='mt-4'>
               <ErrorMessage errorMessage={errors.password.message} />
             </div>
@@ -66,7 +73,7 @@ const Login = () => {
         <div>
           <button
             type="submit"
-            disabled={!disabledOnLoad}
+            disabled={!isValid}
             className="w-full py-4 rounded text-sm font-bold transition duration-200 text-gray-50 bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400">
             Sign In
           </button>

@@ -75,4 +75,21 @@ async function login(username, password) {
   })
 }
 
-export { isAuthenticated, logout, getCurrentUsers, login };
+async function register(email,username,password,repeatPassword) {
+  return fetch(`${apiBaseUrl}/user/register`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "X-API-KEY": apiKey,
+    },
+    body: JSON.stringify({
+      email: email,
+      username: username,
+      password: password,
+      repeatPassword: repeatPassword
+    })
+  })
+}
+
+export { isAuthenticated, logout, getCurrentUsers, login, register };
