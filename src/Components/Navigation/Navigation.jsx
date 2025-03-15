@@ -1,10 +1,12 @@
 import "./Navigation.css";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useLocation } from "react-router";
 import React, { useState, useEffect } from "react";
 import { isAuthenticated, logout } from "../../Services/userService";
 export default function Navigation() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [data, setData] = useState(null);
+  const [previousPath, setPreviousPath] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       isAuthenticated()
@@ -21,16 +23,28 @@ export default function Navigation() {
     }, 5000);
     return () => clearInterval(intervalId);
   }, []);
-  async function logoutFromApp() {
-    useEffect(() => {
-      logout().then(() => {
-          setData(null);
+  useEffect(() => {
+    setPreviousPath(location.pathname);
+  }, [location]);
+  useEffect(() => {
+    if (location.pathname === '/home' && previousPath === '/login') {
+      isAuthenticated()
+        .then((data) => {
+          setData(data);
         })
         .catch(() => {
-          setData(null);
+          setData({});
         });
-      navigate("/home");
-    });
+    }
+  }, [location]);
+  async function logoutFromApp() {
+    logout().then(() => {
+      setData(null);
+    })
+      .catch(() => {
+        setData(null);
+      });
+    navigate("/home");
   }
   return (
     <nav className="dark:bg-gray-900 w-full z-20 top-0 start-0 sticky-header">
@@ -47,9 +61,8 @@ export default function Navigation() {
           id="navbar-sticky"
         >
           <ul
-            className={`${
-              data && data.statusCode === 200 ? "auth-ul" : "guest-ul"
-            } flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700`}
+            className={`${data && data.statusCode === 200 ? "auth-ul" : "guest-ul"
+              } flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700`}
           >
             <li>
               <Link
@@ -101,7 +114,7 @@ export default function Navigation() {
                     Logout
                   </Link>
                 </li>
-                <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400"></span>
+                <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">{data && data.statusCode === 200 && data.message}</span>
               </>
             ) : (
               <>

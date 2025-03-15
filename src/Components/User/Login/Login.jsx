@@ -2,6 +2,8 @@ import './Login.css'
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
+import { login } from '../../../Services/userService';
+import { useNavigate } from 'react-router';
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors }, trigger, watch } = useForm();
@@ -9,9 +11,20 @@ const Login = () => {
   const emailOrUsernameValue = watch('emailOrUsername');
   const passwordValue = watch('password');
   const disabledOnLoad = (emailOrUsernameValue && passwordValue);
+  const navigate = useNavigate();
   const onSubmit = (data) => {
-    console.log(data);
-    //  setApiErrorMessage('Invalid credentials. Please try again.');
+    login(data.emailOrUsername, data.password).then((data) => {
+      data.json().then((response) => {
+        if (response.statusCode !== 200) {
+          setApiErrorMessage(response.message);
+        } else {
+          setApiErrorMessage(null);
+          navigate('/home');
+        }
+      })
+    }).catch(() => {
+      setApiErrorMessage('Invalid credentials. Please try again.');
+    });
   };
   const handleBlur = async (fieldName) => {
     await trigger(fieldName);

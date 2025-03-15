@@ -60,4 +60,19 @@ async function getCurrentUsers() {
     });
 }
 
-export { isAuthenticated, logout, getCurrentUsers };
+async function login(username, password) {
+  return fetch(`${apiBaseUrl}/user/login`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      "X-API-KEY": apiKey,
+    },
+    body: JSON.stringify({
+      emailOrUsername: username,
+      password: password
+    })
+  })
+}
+
+export { isAuthenticated, logout, getCurrentUsers, login };
