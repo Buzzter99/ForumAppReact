@@ -1,6 +1,15 @@
 .auth-ul {
-    margin-left: -100px;
-  }
-  .guest-ul {
-    margin-left: -300px;
-  }
+  margin-left: -100px;
+}
+.guest-ul {
+  margin-left: -300px;
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 20;
+  background-color: #1a202c;
+  transition: top 0.3s ease-in-out;
+}

@@ -33,7 +33,7 @@ export default function Navigation() {
     });
   }
   return (
-    <nav className="dark:bg-gray-900 fixed w-full z-20 top-0 start-0 ">
+    <nav className="dark:bg-gray-900 w-full z-20 top-0 start-0 sticky-header">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link to="/home" className="flex items-centerrtl:space-x-reverse">
           <img src="/react.svg" alt="react-logo" className="h-8"></img>
