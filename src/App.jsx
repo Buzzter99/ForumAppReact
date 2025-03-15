@@ -7,6 +7,7 @@ import Navigation from './Components/Navigation/Navigation.jsx'
 import Home from './Components/Home/Home.jsx'
 import Login from './Components/User/Login/Login.jsx'
 import Register from './Components/User/Register/Register.jsx'
+import AuthenticatedUserGuard from './Components/RouteGuards/AuthenticatedUserGuard.jsx'
 function App() {
 
   return (
@@ -16,8 +17,10 @@ function App() {
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path='/home' element={<Home />}></Route>
         <Route path='/about' element={<About />}></Route>
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
+        <Route element={<AuthenticatedUserGuard />}>
+          <Route path='/register' element={<Register />} />
+          <Route path='/login' element={<Login />} />
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer></Footer>
