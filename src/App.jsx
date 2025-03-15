@@ -7,9 +7,8 @@ import Navigation from './Components/Navigation/Navigation.jsx'
 import Home from './Components/Home/Home.jsx'
 import Login from './Components/User/Login/Login.jsx'
 import Register from './Components/User/Register/Register.jsx'
-import AuthenticatedUserGuard from './Components/RouteGuards/AuthenticatedUserGuard.jsx'
+import AuthorizedRouteGuard from './RouteGuards/AuthorizedRouteGuard/AuthorizedRouteGuard.jsx'
 function App() {
-
   return (
     <>
       <Navigation></Navigation>
@@ -17,7 +16,7 @@ function App() {
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path='/home' element={<Home />}></Route>
         <Route path='/about' element={<About />}></Route>
-        <Route element={<AuthenticatedUserGuard />}>
+        <Route element={<AuthorizedRouteGuard />}>
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
         </Route>
@@ -27,5 +26,4 @@ function App() {
     </>
   )
 }
-
 export default App

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router';
 import { isAuthenticated } from '../../Services/userService';
-const AuthenticatedUserGuard = () => {
+const AuthorizedRouteGuard = () => {
     const [user, setUser] = useState({});
     useEffect(() => {
         isAuthenticated()
@@ -17,4 +17,4 @@ const AuthenticatedUserGuard = () => {
     }
     return <Outlet />;
 };
-export default AuthenticatedUserGuard;
+export default AuthorizedRouteGuard;
