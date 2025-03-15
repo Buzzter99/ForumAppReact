@@ -23,7 +23,7 @@ const Login = () => {
         }
       })
     }).catch(() => {
-      setApiErrorMessage('Invalid credentials. Please try again.');
+      setApiErrorMessage('An error occurred. Please try again later.');
     });
   };
   const handleBlur = async (fieldName) => {
