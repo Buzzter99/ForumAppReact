@@ -13,7 +13,7 @@ const AuthenticatedUserGuard = () => {
             });
     }, []);
     if (user.statusCode === 200) {
-        return <Navigate to={"/404"} replace />;
+        return <Navigate to={"/home"} replace />;
     }
     return <Outlet />;
 };
