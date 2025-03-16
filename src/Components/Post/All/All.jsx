@@ -3,6 +3,7 @@ import postService from "../../../Services/postService";
 import { Link } from "react-router";
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
 import SuccessMessage from "../../SuccessMessage/SuccessMessage";
+import dateTimeFormatter from "../../../utils/DatetimeFormatter";
 export default function All() {
     const [posts, setPosts] = useState([]);
     const [successMessageHeader, setSuccessMessageHeader] = useState(null);
@@ -59,7 +60,7 @@ export default function All() {
                             <div className="flex justify-between items-center">
                                 <h3 className="text-xl font-bold text-blue-400">{post.topic}</h3>
                                 <span className="text-sm text-gray-400">
-                                    {new Date(post.when).toLocaleString()}
+                                    {dateTimeFormatter.formatDateTime(post.when)}
                                 </span>
                             </div>
                             <p className="text-gray-300 mt-4">{post.description}</p>
