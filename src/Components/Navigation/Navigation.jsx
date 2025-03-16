@@ -2,12 +2,29 @@ import "./Navigation.css";
 import { Link, useNavigate, useLocation } from "react-router";
 import React, { useState, useEffect } from "react";
 import userService from "../../Services/userService";
+import storageService from "../../Services/storageService";
+import Spinner from "../Spinner/Spinner";
 export default function Navigation() {
   const navigate = useNavigate();
   const location = useLocation();
   const [data, setData] = useState(null);
+  const [reactSvg, setReactSvg] = useState(null);
   const [previousPath, setPreviousPath] = useState("");
   useEffect(() => {
+    storageService.getUrlForContent('/Apps/ForumAppReact/react.svg')
+      .then((data) => {
+        data.json().then((response) => {
+          setReactSvg(response);
+        });
+      })
+      .catch(() => {
+        setReactSvg(null);
+      });
+    userService.isAuthenticated().then((data) => {
+      setData(data);
+    }).catch(() => {
+      setData({});
+    })
     const fetchData = async () => {
       userService.isAuthenticated()
         .then((data) => {
@@ -50,7 +67,10 @@ export default function Navigation() {
     <nav className="dark:bg-gray-900 w-full z-20 top-0 start-0 sticky-header">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link to="/home" className="flex items-centerrtl:space-x-reverse">
-          <img src="/react.svg" alt="react-logo" className="h-8"></img>
+          <img src={reactSvg && reactSvg.message} alt="" className="h-8"></img>
+          {!reactSvg && <div className="w-10 h-10 rounded-full"><Spinner /></div>
+            //add || /react.svg for test env
+          }
           <span className="text-2xl font-semibold whitespace-nowrap text-white dark:text-white">
             BusarovForumApp
           </span>

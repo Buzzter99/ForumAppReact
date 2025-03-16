@@ -4,7 +4,10 @@ import { Link } from "react-router";
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
 import SuccessMessage from "../../SuccessMessage/SuccessMessage";
 import dateTimeFormatter from "../../../utils/DatetimeFormatter";
+import storageService from "../../../Services/storageService";
+import Spinner from "../../Spinner/Spinner";
 export default function All() {
+    const [imageUrl, setImageUrl] = useState(null);
     const [posts, setPosts] = useState([]);
     const [successMessageHeader, setSuccessMessageHeader] = useState(null);
     const [successMessageContent, setSuccessMessageContent] = useState(null);
@@ -18,6 +21,15 @@ export default function All() {
             })
             .catch(() => {
                 setPosts([]);
+            });
+        storageService.getUrlForContent('/Apps/ForumAppReact/img_avatar.png')
+            .then((data) => {
+                data.json().then((response) => {
+                    setImageUrl(response);
+                });
+            })
+            .catch(() => {
+                setImageUrl(null);
             });
     }, []);
     async function deletePost(postId) {
@@ -65,11 +77,15 @@ export default function All() {
                             </div>
                             <p className="text-gray-300 mt-4">{post.description}</p>
                             <div className="flex items-center mt-6">
-                                <img
-                                    src="/img_avatar.png"
+                                {imageUrl && <img
+                                    // src="/img_avatar.png" use || /img_avatar.png for test env
+                                    src={(imageUrl && imageUrl.message)}
                                     alt="User Avatar"
                                     className="w-10 h-10 rounded-full mr-4"
-                                />
+                                />}
+                                {!imageUrl && <div className="w-10 h-10 rounded-full">
+                                    <Spinner />
+                                </div>}
                                 <div>
                                     <p className="text-sm font-semibold text-gray-200">{post.who.username}</p>
                                 </div>
