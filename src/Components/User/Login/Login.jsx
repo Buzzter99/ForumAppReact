@@ -6,7 +6,7 @@ import userService from '../../../Services/userService';
 import { useNavigate } from 'react-router';
 
 const Login = () => {
-  const { register, handleSubmit, formState: { errors, isValid }, trigger, watch } = useForm();
+  const { register, handleSubmit, formState: { errors, isValid }, trigger, watch, reset } = useForm();
   const [apiErrorMessage, setApiErrorMessage] = useState(null);
   const emailOrUsername = watch('emailOrUsername');
   const password = watch('password');
@@ -16,6 +16,7 @@ const Login = () => {
       data.json().then((response) => {
         if (response.statusCode !== 200) {
           setApiErrorMessage(response.message);
+          reset({ password: '' });
         } else {
           setApiErrorMessage(null);
           navigate('/home');
