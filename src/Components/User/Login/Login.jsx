@@ -2,7 +2,7 @@ import './Login.css'
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
-import { login } from '../../../Services/userService';
+import userService from '../../../Services/userService';
 import { useNavigate } from 'react-router';
 
 const Login = () => {
@@ -12,7 +12,7 @@ const Login = () => {
   const password = watch('password');
   const navigate = useNavigate();
   const onSubmit = (data) => {
-    login(data.emailOrUsername, data.password).then((data) => {
+    userService.login(data.emailOrUsername, data.password).then((data) => {
       data.json().then((response) => {
         if (response.statusCode !== 200) {
           setApiErrorMessage(response.message);

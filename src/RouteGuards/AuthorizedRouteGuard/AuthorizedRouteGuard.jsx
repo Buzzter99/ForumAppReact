@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router';
-import { isAuthenticated } from '../../Services/userService';
+import userService from '../../Services/userService';
 const AuthorizedRouteGuard = () => {
     const [user, setUser] = useState({});
     useEffect(() => {
-        isAuthenticated()
+        userService.isAuthenticated()
             .then((data) => {
                 setUser(data);
             })

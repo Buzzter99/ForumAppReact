@@ -2,7 +2,7 @@ import './Register.css';
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
-import { register as registerUser } from '../../../Services/userService';
+import userService from '../../../Services/userService';
 import { useNavigate } from 'react-router';
 const Register = () => {
     const { register, handleSubmit, trigger, formState: { errors, isValid }, watch, } = useForm();
@@ -13,7 +13,7 @@ const Register = () => {
     const password = watch('password');
     const repeatPassword = watch('repeatPassword');
     const onSubmit = (data) => {
-        registerUser(data.email, data.username, data.password, data.repeatPassword).then((data) => {
+        userService.registerUser(data.email, data.username, data.password, data.repeatPassword).then((data) => {
             data.json().then((response) => {
                 if (response.statusCode !== 200) {
                     setApiErrorMessage(response.message);

@@ -1,12 +1,12 @@
 import "./About.css";
-import { isAuthenticated } from "../../Services/userService";
+import userService from "../../Services/userService";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 export default function About() {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
   useEffect(() => {
-    isAuthenticated()
+    userService.isAuthenticated()
       .then((data) => {
         setUser(data);
       })

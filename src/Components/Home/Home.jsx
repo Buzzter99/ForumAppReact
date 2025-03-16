@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { getCurrentUsers } from "../../Services/userService";
+import userService from "../../Services/userService";
 export default function Home() {
   const [currentUsers, setCurrentUsers] = useState([]);
   useEffect(() => {
-    getCurrentUsers()
+    userService.getCurrentUsers()
       .then((data) => {
         setCurrentUsers(data);
       })

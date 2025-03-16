@@ -1,7 +1,7 @@
 import "./Navigation.css";
 import { Link, useNavigate, useLocation } from "react-router";
 import React, { useState, useEffect } from "react";
-import { isAuthenticated, logout } from "../../Services/userService";
+import userService from "../../Services/userService";
 export default function Navigation() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -9,7 +9,7 @@ export default function Navigation() {
   const [previousPath, setPreviousPath] = useState("");
   useEffect(() => {
     const fetchData = async () => {
-      isAuthenticated()
+      userService.isAuthenticated()
         .then((data) => {
           setData(data);
         })
@@ -28,7 +28,7 @@ export default function Navigation() {
   }, [location]);
   useEffect(() => {
     if (location.pathname === '/home' && previousPath === '/login') {
-      isAuthenticated()
+      userService.isAuthenticated()
         .then((data) => {
           setData(data);
         })
@@ -38,7 +38,7 @@ export default function Navigation() {
     }
   }, [location]);
   async function logoutFromApp() {
-    logout().then(() => {
+    userService.logout().then(() => {
       setData(null);
     })
       .catch(() => {
