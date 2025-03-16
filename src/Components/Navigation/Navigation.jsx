@@ -18,7 +18,7 @@ export default function Navigation() {
         });
       })
       .catch(() => {
-        setReactSvg(null);
+        setReactSvg({message: '/react.svg'});
       });
     userService.isAuthenticated().then((data) => {
       setData(data);
@@ -67,10 +67,9 @@ export default function Navigation() {
     <nav className="dark:bg-gray-900 w-full z-20 top-0 start-0 sticky-header">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link to="/home" className="flex items-centerrtl:space-x-reverse">
-          <img src={reactSvg && reactSvg.message} alt="" className="h-8"></img>
-          {!reactSvg && <div className="w-10 h-10 rounded-full"><Spinner /></div>
-            //add || /react.svg for test env
-          }
+          {reactSvg && <img src={reactSvg.message} alt="React SVG" className="h-8"></img>}
+          {!reactSvg && <div className="w-10 h-10 rounded-full"><Spinner /></div>}
+          {/* add || /react.svg for test env */}
           <span className="text-2xl font-semibold whitespace-nowrap text-white dark:text-white">
             BusarovForumApp
           </span>

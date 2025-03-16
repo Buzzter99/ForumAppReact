@@ -29,7 +29,7 @@ export default function All() {
                 });
             })
             .catch(() => {
-                setImageUrl(null);
+                setImageUrl({message: '/img_avatar.png'});
             });
     }, []);
     async function deletePost(postId) {
@@ -79,7 +79,7 @@ export default function All() {
                             <div className="flex items-center mt-6">
                                 {imageUrl && <img
                                     // src="/img_avatar.png" use || /img_avatar.png for test env
-                                    src={(imageUrl && imageUrl.message)}
+                                    src={imageUrl.message}
                                     alt="User Avatar"
                                     className="w-10 h-10 rounded-full mr-4"
                                 />}
