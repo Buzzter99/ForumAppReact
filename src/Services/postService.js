@@ -39,6 +39,40 @@ const postService = {
       .catch((error) => {
         throw error;
       });
-  }
+  },
+  async getSinglePost(postId) {
+    return fetch(`${apiBaseUrl}/forum/${postId}`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": apiKey,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => {
+        throw error;
+      });
+  },
+  async editPostById({ postId, topic, description, additionalInfo }) {
+    return fetch(`${apiBaseUrl}/forum/edit/${postId}`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": apiKey,
+      },
+      body: JSON.stringify({
+        topic: topic,
+        description: description,
+        additionalInfo: additionalInfo,
+      }),
+    });
+  },
 };
 export default postService;

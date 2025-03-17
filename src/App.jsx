@@ -8,7 +8,9 @@ import Home from './Components/Home/Home.jsx'
 import Login from './Components/User/Login/Login.jsx'
 import Register from './Components/User/Register/Register.jsx'
 import AuthorizedRouteGuard from './RouteGuards/AuthorizedRouteGuard/AuthorizedRouteGuard.jsx'
+import UnauthorizedRouteGuard from './RouteGuards/UnauthorizedRouteGuard/UnauthorizedRouteGuard.jsx'
 import All from './Components/Post/All/All.jsx'
+import Edit from './Components/Post/Edit/Edit.jsx'
 function App() {
   return (
     <>
@@ -21,6 +23,9 @@ function App() {
         <Route element={<AuthorizedRouteGuard />}>
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
+        </Route>
+        <Route element={<UnauthorizedRouteGuard />}>
+          <Route path='/edit/:postId' element={<Edit />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

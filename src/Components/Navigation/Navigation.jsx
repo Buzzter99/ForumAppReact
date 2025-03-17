@@ -18,7 +18,7 @@ export default function Navigation() {
         });
       })
       .catch(() => {
-        setReactSvg({message: '/react.svg'});
+        setReactSvg({ message: '/react.svg' });
       });
     userService.isAuthenticated().then((data) => {
       setData(data);
@@ -56,12 +56,13 @@ export default function Navigation() {
   }, [location]);
   async function logoutFromApp() {
     userService.logout().then(() => {
-      setData(null);
+      setData({});
     })
       .catch(() => {
-        setData(null);
+        setData({});
+      }).finally(() => {
+        navigate("/home");
       });
-    navigate("/home");
   }
   return (
     <nav className="dark:bg-gray-900 w-full z-20 top-0 start-0 sticky-header">

@@ -12,7 +12,7 @@ const AuthorizedRouteGuard = () => {
                 setUser({});
             });
     }, []);
-    if (user.statusCode === 200) {
+    if (user.statusCode && user.statusCode === 200) {
         return <Navigate to={"/home"} replace />;
     }
     return <Outlet />;

@@ -9,10 +9,10 @@ const UnauthorizedRouteGuard = () => {
                 setUser(data);
             })
             .catch(() => {
-                setUser({});
+                setUser({statusCode: 404});
             });
     }, []);
-    if (user.statusCode !== 200) {
+    if (user.statusCode && user.statusCode !== 200) {
         return <Navigate to={"/404"} replace />;
     }
     return <Outlet />;
