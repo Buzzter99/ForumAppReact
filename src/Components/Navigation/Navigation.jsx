@@ -14,7 +14,7 @@ export default function Navigation() {
     storageService.getUrlForContent('/Apps/ForumAppReact/react.svg')
       .then((data) => {
         data.json().then((response) => {
-          setReactSvg(response);
+          response.statusCode !== 200 ? setReactSvg({ message: '/react.svg' }) : setReactSvg(response);
         });
       })
       .catch(() => {
@@ -70,7 +70,6 @@ export default function Navigation() {
         <Link to="/home" className="flex items-centerrtl:space-x-reverse">
           {reactSvg && <img src={reactSvg.message} alt="React SVG" className="h-8"></img>}
           {!reactSvg && <div className="w-10 h-10 rounded-full"><Spinner /></div>}
-          {/* add || /react.svg for test env */}
           <span className="text-2xl font-semibold whitespace-nowrap text-white dark:text-white">
             BusarovForumApp
           </span>

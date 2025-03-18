@@ -5,7 +5,7 @@ import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import userService from '../../../Services/userService';
 import { useNavigate } from 'react-router';
 const Register = () => {
-    const { register, handleSubmit, trigger, formState: { errors, isValid }, watch, } = useForm();
+    const { register, handleSubmit, trigger, formState: { errors, isValid,dirtyFields }, watch, } = useForm();
     const [apiErrorMessage, setApiErrorMessage] = useState(null);
     const navigate = useNavigate();
     const email = watch('email');
@@ -13,7 +13,7 @@ const Register = () => {
     const password = watch('password');
     const repeatPassword = watch('repeatPassword');
     const onSubmit = (data) => {
-        userService.registerUser(data.email, data.username, data.password, data.repeatPassword).then((data) => {
+        userService.register(data.email, data.username, data.password, data.repeatPassword).then((data) => {
             data.json().then((response) => {
                 if (response.statusCode !== 200) {
                     setApiErrorMessage(response.message);
@@ -30,16 +30,16 @@ const Register = () => {
         await trigger(fieldName);
     };
     useEffect(() => {
-        if (email) {
+        if (email || (dirtyFields.email && email === '')) {
             trigger("email");
         }
-        if (username) {
+        if (username || (dirtyFields.username && username === '')) {
             trigger("username");
         }
-        if (password) {
+        if (password || (dirtyFields.password && password === '')) {
             trigger("password");
         }
-        if (repeatPassword) {
+        if (repeatPassword || (dirtyFields.repeatPassword && repeatPassword === '')) {
             trigger("repeatPassword");
         }
     }, [email, username, password, repeatPassword, trigger]);

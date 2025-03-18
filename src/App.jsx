@@ -11,6 +11,7 @@ import AuthorizedRouteGuard from './RouteGuards/AuthorizedRouteGuard/AuthorizedR
 import UnauthorizedRouteGuard from './RouteGuards/UnauthorizedRouteGuard/UnauthorizedRouteGuard.jsx'
 import All from './Components/Post/All/All.jsx'
 import Edit from './Components/Post/Edit/Edit.jsx'
+import Create from './Components/Post/Create/Create.jsx'
 function App() {
   return (
     <>
@@ -26,6 +27,7 @@ function App() {
         </Route>
         <Route element={<UnauthorizedRouteGuard />}>
           <Route path='/edit/:postId' element={<Edit />} />
+          <Route path='/create' element={<Create />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

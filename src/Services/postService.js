@@ -74,5 +74,20 @@ const postService = {
       }),
     });
   },
+  async addPost({ topic, description, additionalInfo }) {
+    return fetch(`${apiBaseUrl}/forum/add`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": apiKey,
+      },
+      body: JSON.stringify({
+        topic: topic,
+        description: description,
+        additionalInfo: additionalInfo,
+      }),
+    });
+  },
 };
 export default postService;

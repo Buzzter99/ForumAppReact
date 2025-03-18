@@ -25,7 +25,7 @@ export default function All() {
         storageService.getUrlForContent('/Apps/ForumAppReact/img_avatar.png')
             .then((data) => {
                 data.json().then((response) => {
-                    setImageUrl(response);
+                    data.statusCode !== 200 ? setImageUrl({message: '/img_avatar.png'}) : setImageUrl(response);
                 });
             })
             .catch(() => {
@@ -78,7 +78,6 @@ export default function All() {
                             <p className="text-gray-300 mt-4">{post.description}</p>
                             <div className="flex items-center mt-6">
                                 {imageUrl && <img
-                                    // src="/img_avatar.png" use || /img_avatar.png for test env
                                     src={imageUrl.message}
                                     alt="User Avatar"
                                     className="w-10 h-10 rounded-full mr-4"
