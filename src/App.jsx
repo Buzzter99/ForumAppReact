@@ -12,6 +12,7 @@ import UnauthorizedRouteGuard from './RouteGuards/UnauthorizedRouteGuard/Unautho
 import All from './Components/Post/All/All.jsx'
 import Edit from './Components/Post/Edit/Edit.jsx'
 import Create from './Components/Post/Create/Create.jsx'
+import Details from './Components/Post/Details/Details.jsx'
 function App() {
   return (
     <>
@@ -21,6 +22,7 @@ function App() {
         <Route path='/home' element={<Home />}></Route>
         <Route path='/about' element={<About />}></Route>
         <Route path='/all' element={<All />}></Route>
+        <Route path='/all/:postId' element={<Details />}></Route>
         <Route element={<AuthorizedRouteGuard />}>
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />

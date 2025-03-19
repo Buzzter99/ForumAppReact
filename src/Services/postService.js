@@ -89,5 +89,29 @@ const postService = {
       }),
     });
   },
+  async addComment({ postId, msg }) {
+    return fetch(`${apiBaseUrl}/forum/addComment`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": apiKey,
+      },
+      body: JSON.stringify({
+        msg,
+        postId,
+      }),
+    });
+  },
+  async likePost(postId) {
+    return fetch(`${apiBaseUrl}/forum/like/${postId}`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": apiKey,
+      },
+    });
+  },
 };
 export default postService;
