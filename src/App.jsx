@@ -13,6 +13,7 @@ import All from './Components/Post/All/All.jsx'
 import Edit from './Components/Post/Edit/Edit.jsx'
 import Create from './Components/Post/Create/Create.jsx'
 import Details from './Components/Post/Details/Details.jsx'
+import Comments from './Components/User/Comments/Comments.jsx'
 function App() {
   return (
     <>
@@ -30,6 +31,7 @@ function App() {
         <Route element={<UnauthorizedRouteGuard />}>
           <Route path='/edit/:postId' element={<Edit />} />
           <Route path='/create' element={<Create />} />
+          <Route path='/comments' element={<Comments />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -113,5 +113,25 @@ const postService = {
       },
     });
   },
+  async getCommentsForUser() {
+    return fetch(`${apiBaseUrl}/user/comments`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": apiKey,
+      },
+    });
+  },
+  async deleteComment(postId, commentId) {
+    return fetch(`${apiBaseUrl}/user/comments/${postId}/${commentId}`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": apiKey,
+      },
+    });
+  },
 };
 export default postService;
