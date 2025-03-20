@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export default function SuccessMessage({ successMessageHeader, successMessageContent }) {
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50 p-4 pointer-events-none">
@@ -16,3 +18,8 @@ export default function SuccessMessage({ successMessageHeader, successMessageCon
         </div>
     )
 }
+
+SuccessMessage.propTypes = {
+    successMessageHeader: PropTypes.string.isRequired,
+    successMessageContent: PropTypes.string.isRequired
+};

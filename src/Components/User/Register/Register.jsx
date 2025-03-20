@@ -5,7 +5,7 @@ import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import userService from '../../../Services/userService';
 import { useNavigate } from 'react-router';
 const Register = () => {
-    const { register, handleSubmit, trigger, formState: { errors, isValid,dirtyFields }, watch, } = useForm();
+    const { register, handleSubmit, trigger, formState: { errors, isValid, dirtyFields }, watch, } = useForm();
     const [apiErrorMessage, setApiErrorMessage] = useState(null);
     const navigate = useNavigate();
     const email = watch('email');
@@ -30,16 +30,16 @@ const Register = () => {
         await trigger(fieldName);
     };
     useEffect(() => {
-        if (email || (dirtyFields.email && email === '')) {
+        if (dirtyFields.email) {
             trigger("email");
         }
-        if (username || (dirtyFields.username && username === '')) {
+        if (dirtyFields.username) {
             trigger("username");
         }
-        if (password || (dirtyFields.password && password === '')) {
+        if (dirtyFields.password) {
             trigger("password");
         }
-        if (repeatPassword || (dirtyFields.repeatPassword && repeatPassword === '')) {
+        if (dirtyFields.repeatPassword) {
             trigger("repeatPassword");
         }
     }, [email, username, password, repeatPassword, trigger]);

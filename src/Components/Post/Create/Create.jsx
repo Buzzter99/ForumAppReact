@@ -32,10 +32,10 @@ export default function Create() {
       });
   };
   useEffect(() => {
-    if (topic || (dirtyFields.topic && topic === "")) {
+    if (dirtyFields.topic) {
       trigger("topic");
     }
-    if (description || (dirtyFields.description && description === "")) {
+    if (dirtyFields.description) {
       trigger("description");
     }
   }, [topic, description, trigger]);

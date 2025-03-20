@@ -94,7 +94,7 @@ export default function Details() {
     await trigger(fieldName);
   };
   useEffect(() => {
-    if (msg || (dirtyFields.msg && msg === "")) {
+    if (dirtyFields.msg) {
       trigger("msg");
     }
   }, [msg, trigger]);
@@ -113,9 +113,8 @@ export default function Details() {
                   <button
                     type="button"
                     onClick={toggleLike}
-                    className={`ms-3 p-1 rounded text-gray-400 hover:text-blue-500 transition ${
-                      !isLiked ? "like-button" : "unlike-button"
-                    } liked-button`}
+                    className={`ms-3 p-1 rounded text-gray-400 hover:text-blue-500 transition ${!isLiked ? "like-button" : "unlike-button"
+                      } liked-button`}
                     aria-label="Like post"
                   >
                     <svg

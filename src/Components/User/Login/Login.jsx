@@ -36,13 +36,10 @@ const Login = () => {
       });
   };
   useEffect(() => {
-    if (
-      emailOrUsername ||
-      (dirtyFields.emailOrUsername && emailOrUsername === "")
-    ) {
+    if (dirtyFields.emailOrUsername) {
       trigger("emailOrUsername");
     }
-    if (password || (dirtyFields.password && password === "")) {
+    if (dirtyFields.password) {
       trigger("password");
     }
   }, [emailOrUsername, password, trigger]);
