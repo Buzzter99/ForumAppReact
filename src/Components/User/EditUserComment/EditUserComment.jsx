@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import userService from '../../../Services/userService';
 import { useNavigate, useParams } from 'react-router';
+import LoadingPageSpinner from '../../LoadingPageSpinner/LoadingPageSpinner';
 export default function EditUserComment() {
     const {
         register,
@@ -12,6 +13,7 @@ export default function EditUserComment() {
     const navigate = useNavigate();
     const { commentId } = useParams();
     const [apiErrorMessage, setApiErrorMessage] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const msg = watch('msg');
     useEffect(() => {
         userService.getCommentById(commentId).then((data) => {
@@ -21,10 +23,11 @@ export default function EditUserComment() {
             else {
                 setValue("msg", data.message);
                 trigger();
+                setIsLoading(true);
             }
         }
         ).catch(() => {
-            setApiErrorMessage('An error occurred. Please try again later.');
+            navigate("/404");
         });
     }, []);
     const onSubmit = (data) => {
@@ -49,6 +52,13 @@ export default function EditUserComment() {
             trigger("msg");
         }
     }, [msg, trigger]);
+    if (!isLoading) {
+        return (
+            <div className="text-center pt-10">
+                <LoadingPageSpinner></LoadingPageSpinner>
+            </div>
+        )
+    }
     return (
         <div className="min-h-screen bg-gray-800 text-gray-200 pt-10 pb-2">
             <div className="max-w-xl mx-auto bg-gray-900 text-gray-200 shadow-lg rounded-lg p-8 border border-gray-700">

@@ -3,11 +3,13 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import postService from "../../../Services/postService";
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
+import LoadingPageSpinner from "../../LoadingPageSpinner/LoadingPageSpinner";
 export default function Edit() {
     const { postId } = useParams();
     const navigate = useNavigate();
     const [apiErrorMessage, setApiErrorMessage] = useState(null);
     const { handleSubmit, formState: { errors, isValid, dirtyFields }, register, trigger, setValue, watch } = useForm();
+    const [isLoading, setIsLoading] = useState(false);
     const topic = watch('topic');
     const description = watch('description');
     useEffect(() => {
@@ -20,8 +22,11 @@ export default function Edit() {
                 setValue("description", data.description);
                 setValue("additionalInfo", data.additionalInfo);
                 trigger();
+                setIsLoading(true);
             }
-        })
+        }).catch(() => {
+            navigate("/404");
+        });
     }, []);
     const onSubmit = (data) => {
         const apiData = { postId, ...data };
@@ -49,6 +54,13 @@ export default function Edit() {
             trigger("description");
         }
     }, [topic, description, trigger]);
+    if (!isLoading) {
+        return (
+            <div className="text-center pt-10">
+                <LoadingPageSpinner></LoadingPageSpinner>
+            </div>
+        )
+    }
     return (
         <div className="min-h-screen bg-gray-800 text-gray-200 pt-10 pb-2">
             <div className="max-w-xl mx-auto bg-gray-900 text-gray-200 shadow-lg rounded-lg p-8 border border-gray-700">
