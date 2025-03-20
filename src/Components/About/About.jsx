@@ -28,7 +28,7 @@ export default function About() {
           interactions.
         </p>
         <p>
-          Whether you're here to learn, share your knowledge, or simply
+          Whether you&apos;re here to learn, share your knowledge, or simply
           explore, Busarov Forum is the place for you. Join us and be part of
           a growing global community.
         </p>

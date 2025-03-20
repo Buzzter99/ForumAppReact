@@ -14,6 +14,7 @@ import Edit from './Components/Post/Edit/Edit.jsx'
 import Create from './Components/Post/Create/Create.jsx'
 import Details from './Components/Post/Details/Details.jsx'
 import Comments from './Components/User/Comments/Comments.jsx'
+import EditUserComment from './Components/User/EditUserComment/EditUserComment.jsx'
 function App() {
   return (
     <>
@@ -32,6 +33,7 @@ function App() {
           <Route path='/edit/:postId' element={<Edit />} />
           <Route path='/create' element={<Create />} />
           <Route path='/comments' element={<Comments />} />
+          <Route path='/comments/edit/:commentId' element={<EditUserComment />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -1,6 +1,6 @@
 import "./Navigation.css";
 import { Link, useNavigate, useLocation } from "react-router";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import userService from "../../Services/userService";
 import storageService from "../../Services/storageService";
 import Spinner from "../Spinner/Spinner";
@@ -53,7 +53,7 @@ export default function Navigation() {
           setData({});
         });
     }
-  }, [location]);
+  }, [location, previousPath]);
   async function logoutFromApp() {
     userService.logout().then(() => {
       setData({});

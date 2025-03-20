@@ -88,6 +88,36 @@ const userService = {
       }),
     });
   },
+  async getCommentById(commentId) {
+    return fetch(`${apiBaseUrl}/user/edit/comment/${commentId}`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": apiKey,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => {
+        throw error;
+      });
+  },
+  async editCommentById(commentId, msg) {
+    return fetch(`${apiBaseUrl}/user/edit/comment/${commentId}`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": apiKey,
+      },
+      body: JSON.stringify({ msg }),
+    });
+  },
 };
 
 export default userService;

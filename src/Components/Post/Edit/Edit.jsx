@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router"
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import postService from "../../../Services/postService";
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
@@ -7,7 +7,7 @@ export default function Edit() {
     const { postId } = useParams();
     const navigate = useNavigate();
     const [apiErrorMessage, setApiErrorMessage] = useState(null);
-    const { handleSubmit, formState: { errors, isValid }, register, trigger, setValue, watch } = useForm();
+    const { handleSubmit, formState: { errors, isValid, dirtyFields }, register, trigger, setValue, watch } = useForm();
     const topic = watch('topic');
     const description = watch('description');
     useEffect(() => {
@@ -42,8 +42,12 @@ export default function Edit() {
         await trigger(fieldName);
     };
     useEffect(() => {
-        trigger("topic");
-        trigger("description");
+        if (dirtyFields.topic) {
+            trigger("topic");
+        }
+        if (dirtyFields.description) {
+            trigger("description");
+        }
     }, [topic, description, trigger]);
     return (
         <div className="min-h-screen bg-gray-800 text-gray-200 pt-10 pb-2">
