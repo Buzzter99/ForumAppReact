@@ -118,6 +118,38 @@ const userService = {
       body: JSON.stringify({ msg }),
     });
   },
+  async getLoggedInUser() {
+    return fetch(`${apiBaseUrl}/user/info`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": apiKey,
+      },
+    });
+  },
+  async updateAccount({
+    username,
+    email,
+    oldPassword,
+    newPassword,
+    confirmNewPassword,
+  }) {
+    return fetch(`${apiBaseUrl}/user/update`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": apiKey,
+      },
+      body: JSON.stringify({
+        username: username,
+        email: email,
+        oldPassword: oldPassword,
+        newPassword: newPassword,
+        confirmNewPassword: confirmNewPassword,
+      }),
+    });
+  },
 };
-
 export default userService;

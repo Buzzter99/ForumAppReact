@@ -2,16 +2,13 @@ import './Register.css';
 import  { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
-import userService from '../../../Services/userService';
+import userService from '../../../services/userService';
 import { useNavigate } from 'react-router';
 const Register = () => {
     const { register, handleSubmit, trigger, formState: { errors, isValid, dirtyFields }, watch, } = useForm();
     const [apiErrorMessage, setApiErrorMessage] = useState(null);
     const navigate = useNavigate();
-    const email = watch('email');
-    const username = watch('username');
-    const password = watch('password');
-    const repeatPassword = watch('repeatPassword');
+    const {email,username,password,repeatPassword} = watch();
     const onSubmit = (data) => {
         userService.register(data.email, data.username, data.password, data.repeatPassword).then((data) => {
             data.json().then((response) => {
