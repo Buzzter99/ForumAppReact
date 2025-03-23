@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
-import userService from "../../../services/userService";
+import userService from "../../../Services/userService";
 import { useNavigate, useParams } from "react-router";
 import LoadingPageSpinner from "../../LoadingPageSpinner/LoadingPageSpinner";
 export default function EditUserComment() {
@@ -17,7 +17,7 @@ export default function EditUserComment() {
   const { commentId } = useParams();
   const [apiErrorMessage, setApiErrorMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const msg = watch("msg");
+  const { msg } = watch();
   useEffect(() => {
     userService
       .getCommentById(commentId)

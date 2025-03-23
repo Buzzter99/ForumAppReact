@@ -16,10 +16,11 @@ import Details from './Components/Post/Details/Details.jsx'
 import Comments from './Components/User/Comments/Comments.jsx'
 import EditUserComment from './Components/User/EditUserComment/EditUserComment.jsx'
 import UpdateAccount from './Components/User/UpdateAccount/UpdateAccount.jsx'
+import { AuthProvider } from './Contexts/AuthProvider.jsx'
 function App() {
   return (
-    <>
-      <Navigation></Navigation>
+    <AuthProvider>
+      <Navigation/>
       <Routes>
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path='/home' element={<Home />}></Route>
@@ -40,7 +41,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer></Footer>
-    </>
+    </AuthProvider>
   )
 }
 export default App

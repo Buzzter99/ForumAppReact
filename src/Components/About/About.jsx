@@ -2,16 +2,18 @@ import "./About.css";
 import userService from "../../Services/userService";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { useUser } from "../../Contexts/AuthProvider";
 export default function About() {
-  const [user, setUser] = useState({});
+  const { user, login, logout } = useUser();
   const navigate = useNavigate();
   useEffect(() => {
-    userService.isAuthenticated()
+    userService
+      .isAuthenticated()
       .then((data) => {
-        setUser(data);
+        login(data);
       })
       .catch(() => {
-        setUser({});
+        logout();
       });
   }, []);
   const navigateToPage = (page) => {
@@ -22,20 +24,18 @@ export default function About() {
       <div className="container">
         <h1>About Busarov Forum</h1>
         <p>
-          Welcome to Busarov Forum, your platform to connect, engage, and
-          share ideas with like-minded individuals. Our mission is to bring
+          Welcome to Busarov Forum, your platform to connect, engage, and share
+          ideas with like-minded individuals. Our mission is to bring
           communities closer together through open discussions and meaningful
           interactions.
         </p>
         <p>
           Whether you&apos;re here to learn, share your knowledge, or simply
-          explore, Busarov Forum is the place for you. Join us and be part of
-          a growing global community.
+          explore, Busarov Forum is the place for you. Join us and be part of a
+          growing global community.
         </p>
-        {user && user.statusCode === 200 ? (
-          <button onClick={() => navigateToPage("all")}>
-            Check All Posts
-          </button>
+        {user.statusCode === 200 ? (
+          <button onClick={() => navigateToPage("all")}>Check All Posts</button>
         ) : (
           <button onClick={() => navigateToPage("register")}>Register</button>
         )}

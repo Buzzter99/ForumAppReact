@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import userService from "../../../services/userService";
+import userService from "../../../Services/userService";
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
 import { useNavigate } from "react-router";
 import SuccessMessage from "../../SuccessMessage/SuccessMessage";

@@ -13,8 +13,7 @@ export default function Create() {
   } = useForm();
   const navigate = useNavigate();
   const [apiErrorMessage, setApiErrorMessage] = useState(null);
-  const topic = watch("topic");
-  const description = watch("description");
+  const {topic,description} = watch();
   const onSubmit = (data) => {
     postService
       .addPost(data)

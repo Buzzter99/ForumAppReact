@@ -10,8 +10,7 @@ export default function Edit() {
     const [apiErrorMessage, setApiErrorMessage] = useState(null);
     const { handleSubmit, formState: { errors, isValid, dirtyFields }, register, trigger, setValue, watch } = useForm();
     const [isLoading, setIsLoading] = useState(false);
-    const topic = watch('topic');
-    const description = watch('description');
+    const {topic,description} = watch();
     useEffect(() => {
         postService.getSinglePost(postId).then((data) => {
             if ((data.statusCode && data.statusCode !== 200) || (!data.isOwner)) {

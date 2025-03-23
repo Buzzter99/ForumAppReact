@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
 import userService from "../../../Services/userService";
 import { useNavigate } from "react-router";
+import { useUser } from "../../../Contexts/AuthProvider";
 const Login = () => {
   const {
     register,
@@ -13,9 +14,9 @@ const Login = () => {
     watch,
     reset,
   } = useForm();
+  const { login, logout } = useUser();
   const [apiErrorMessage, setApiErrorMessage] = useState(null);
-  const emailOrUsername = watch("emailOrUsername");
-  const password = watch("password");
+  const { emailOrUsername, password } = watch();
   const navigate = useNavigate();
   const onSubmit = (data) => {
     userService
@@ -27,6 +28,14 @@ const Login = () => {
             reset({ password: "" });
           } else {
             setApiErrorMessage(null);
+            userService
+              .isAuthenticated()
+              .then((data) => {
+                login(data);
+              })
+              .catch(() => {
+                logout();
+              });
             navigate("/home");
           }
         });

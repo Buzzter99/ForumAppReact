@@ -2,7 +2,7 @@ import './Register.css';
 import  { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
-import userService from '../../../services/userService';
+import userService from '../../../Services/userService';
 import { useNavigate } from 'react-router';
 const Register = () => {
     const { register, handleSubmit, trigger, formState: { errors, isValid, dirtyFields }, watch, } = useForm();

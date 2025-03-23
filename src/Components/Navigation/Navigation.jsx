@@ -1,66 +1,61 @@
 import "./Navigation.css";
 import { Link, useNavigate, useLocation } from "react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import userService from "../../Services/userService";
 import storageService from "../../Services/storageService";
 import Spinner from "../Spinner/Spinner";
+import { useUser } from "../../Contexts/AuthProvider";
 export default function Navigation() {
+  const { user, login, logout } = useUser();
   const navigate = useNavigate();
-  const location = useLocation();
-  const [data, setData] = useState(null);
   const [reactSvg, setReactSvg] = useState(null);
-  const [previousPath, setPreviousPath] = useState("");
+  const fetchData = async () => {
+    userService
+      .isAuthenticated()
+      .then((data) => {
+        login(data);
+      })
+      .catch(() => {
+        logout();
+      });
+  };
   useEffect(() => {
-    storageService.getUrlForContent('/Apps/ForumAppReact/react.svg')
+    storageService
+      .getUrlForContent("/Apps/ForumAppReact/react.svg")
       .then((data) => {
         data.json().then((response) => {
-          response.statusCode !== 200 ? setReactSvg({ message: '/react.svg' }) : setReactSvg(response);
+          response.statusCode !== 200
+            ? setReactSvg({ message: "/react.svg" })
+            : setReactSvg(response);
         });
       })
       .catch(() => {
-        setReactSvg({ message: '/react.svg' });
+        setReactSvg({ message: "/react.svg" });
       });
-    userService.isAuthenticated().then((data) => {
-      setData(data);
-    }).catch(() => {
-      setData({});
-    })
-    const fetchData = async () => {
-      userService.isAuthenticated()
-        .then((data) => {
-          setData(data);
-        })
-        .catch(() => {
-          setData({});
-        });
-    };
+    userService
+      .isAuthenticated()
+      .then((data) => {
+        login(data);
+      })
+      .catch(() => {
+        logout();
+      });
     fetchData();
     const intervalId = setInterval(() => {
       fetchData();
     }, 5000);
     return () => clearInterval(intervalId);
   }, []);
-  useEffect(() => {
-    setPreviousPath(location.pathname);
-  }, [location]);
-  useEffect(() => {
-    if (location.pathname === '/home' && previousPath === '/login') {
-      userService.isAuthenticated()
-        .then((data) => {
-          setData(data);
-        })
-        .catch(() => {
-          setData({});
-        });
-    }
-  }, [location, previousPath]);
   async function logoutFromApp() {
-    userService.logout().then(() => {
-      setData({});
-    })
+    userService
+      .logout()
+      .then(() => {
+        logout();
+      })
       .catch(() => {
-        setData({});
-      }).finally(() => {
+        logout();
+      })
+      .finally(() => {
         navigate("/home");
       });
   }
@@ -68,8 +63,14 @@ export default function Navigation() {
     <nav className="dark:bg-gray-900 w-full z-20 top-0 start-0 sticky-header">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link to="/home" className="flex items-centerrtl:space-x-reverse">
-          {reactSvg && <img src={reactSvg.message} alt="React SVG" className="h-8"></img>}
-          {!reactSvg && <div className="w-10 h-10 rounded-full"><Spinner /></div>}
+          {reactSvg && (
+            <img src={reactSvg.message} alt="React SVG" className="h-8"></img>
+          )}
+          {!reactSvg && (
+            <div className="w-10 h-10 rounded-full">
+              <Spinner />
+            </div>
+          )}
           <span className="text-2xl font-semibold whitespace-nowrap text-white dark:text-white">
             BusarovForumApp
           </span>
@@ -80,8 +81,9 @@ export default function Navigation() {
           id="navbar-sticky"
         >
           <ul
-            className={`${data && data.statusCode === 200 ? "auth-ul" : "guest-ul"
-              } flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700`}
+            className={`${
+              user.statusCode === 200 ? "auth-ul" : "guest-ul"
+            } flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700`}
           >
             <li>
               <Link
@@ -99,7 +101,7 @@ export default function Navigation() {
                 All Posts
               </Link>
             </li>
-            {data && data.statusCode === 200 ? (
+            {user.statusCode === 200 ? (
               <>
                 <li>
                   <Link
@@ -133,7 +135,9 @@ export default function Navigation() {
                     Logout
                   </Link>
                 </li>
-                <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">{data && data.statusCode === 200 && data.message}</span>
+                <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
+                  {user.statusCode === 200 ? user.message : ""}
+                </span>
               </>
             ) : (
               <>

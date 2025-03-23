@@ -23,7 +23,7 @@ export default function Details() {
   const [singlePost, setSinglePost] = useState({});
   const [imageUrl, setImageUrl] = useState(null);
   const [apiErrorMessage, setApiErrorMessage] = useState(null);
-  const msg = watch("msg");
+  const {msg} = watch();
   async function getSinglePost() {
     postService
       .getSinglePost(postId)
