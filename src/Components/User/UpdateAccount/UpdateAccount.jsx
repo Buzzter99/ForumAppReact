@@ -4,6 +4,7 @@ import userService from "../../../Services/userService";
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
 import { useNavigate } from "react-router";
 import SuccessMessage from "../../SuccessMessage/SuccessMessage";
+import { useUser } from "../../../Contexts/AuthProvider";
 export default function UpdateAccount() {
   const {
     register,
@@ -13,6 +14,7 @@ export default function UpdateAccount() {
     trigger,
     setValue,
   } = useForm();
+  const { login, logout } = useUser();
   const navigate = useNavigate();
   const [apiErrorMessage, setApiErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -40,7 +42,15 @@ export default function UpdateAccount() {
     trigger("oldPassword");
     trigger("newPassword");
     trigger("confirmNewPassword");
-  }, [ email,username,confirmNewPassword,newPassword, oldPassword,dirtyFields,trigger ]);
+  }, [
+    email,
+    username,
+    confirmNewPassword,
+    newPassword,
+    oldPassword,
+    dirtyFields,
+    trigger,
+  ]);
   const handleBlur = async (fieldName) => {
     await trigger(fieldName);
   };
@@ -51,6 +61,14 @@ export default function UpdateAccount() {
           setApiErrorMessage(data.message);
         } else {
           setSuccessMessage("Account updated successfully!");
+          userService
+            .isAuthenticated()
+            .then((data) => {
+              login(data);
+            })
+            .catch(() => {
+              logout();
+            });
           setApiErrorMessage("");
           setTimeout(() => {
             setSuccessMessage("");
